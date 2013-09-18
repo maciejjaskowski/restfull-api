@@ -1,0 +1,49 @@
+<html>
+<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+	 function getURLParameter(name) {
+		        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?    )(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+	 }
+	 
+	 function link(link) {
+		 return "<a href='" + link.uri + "'>" + link.rel + "</a>";
+	 }
+	 
+	 function li(tag) {
+		 var result = $("<li></li>");
+		 result.append(tag);
+		 return result;
+	 }
+	 
+	 $(function() {
+		$.ajax({
+			"type": "get",
+			"dataType": "json",
+			"accepts": {json: "application/vnd.myown.callforwards+json"},
+		    "url": location.href, 
+			"success": function(data, status) {
+		      console.log(JSON.stringify(data, undefined, 2))
+			  var pre = $("<pre></pre>");
+			  $(pre).append(JSON.stringify(data, undefined, 2))
+			  $("response").append(pre);
+			  
+			  $("uri").text(data._self.link.uri);
+			  
+			  $.each(data._links, function(i,value) {
+				  $("links").append(li(link(value.link)));
+			  });
+			  $("links").append(li(link(data._self.link)));
+			}
+		   }).fail(function(err, t){ console.log(err); console.warn(t); });
+		});
+	</script>
+</head>
+<body>
+	Response to GET <uri></uri>
+	<br/>
+	<response></response>
+	<links><ul></ul></links>
+
+</body>
+</html>
