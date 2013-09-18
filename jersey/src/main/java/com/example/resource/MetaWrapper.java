@@ -1,4 +1,4 @@
-package com.example.domain;
+package com.example.resource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.map.annotate.JsonRootName;
+
 
 @XmlRootElement
 @JsonRootName("d")

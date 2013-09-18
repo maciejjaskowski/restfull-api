@@ -1,4 +1,4 @@
-package com.example;
+package com.example.bodywriters;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,11 +11,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
-import com.example.domain.Target;
+import com.example.resource.MetaWrapper;
+
 
 @Provider
 public class XMLMessageBodyWriterV2 implements MessageBodyWriter<Object> {
@@ -44,7 +42,7 @@ public class XMLMessageBodyWriterV2 implements MessageBodyWriter<Object> {
 			MultivaluedMap<String, Object> map, OutputStream out)
 			throws IOException, WebApplicationException {
 
-		if (object instanceof Target) {
+		if (object instanceof MetaWrapper) {
 			new OutputStreamWriter(out).append("<xml>new version</xml>").close();
 		}
 	}

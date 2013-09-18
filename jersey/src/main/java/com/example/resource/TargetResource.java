@@ -1,4 +1,6 @@
-package com.example;
+package com.example.resource;
+
+import static java.util.Arrays.asList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -27,10 +29,15 @@ public class TargetResource {
     	       "text/html;qs=0.1",
     	       "application/vnd.myown.target+json;qs=1"})
     
-    public Target getIt(@PathParam(value="id") long id) {
+    public MetaWrapper get(@PathParam(value="id") long id) {
     	if (id > 15) {
     		throw new NotFoundException();
     	}
-        return new Target(id, "name", "type");
+    	Target target = new Target(id, "name", "type");
+    	return new MetaWrapper(target, 
+				Link.toTarget("self", target), 
+				asList(
+						Link.toCallForwards(target))
+					);
     }
 }

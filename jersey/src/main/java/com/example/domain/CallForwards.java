@@ -8,7 +8,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 @JsonRootName("target")
 public class CallForwards {
 
-	private long id;
 	private String name;
 	private Target target;
 	
@@ -16,16 +15,11 @@ public class CallForwards {
 		//JAX-B
 	}
 	
-	public CallForwards(long id, String name, Target target) {
-		this.id = id;
+	public CallForwards(String name, Target target) {
 		this.name = name;
 		this.target = target;
 	}
 	
-	public long getId() {
-		return id;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -34,7 +28,7 @@ public class CallForwards {
 		this.name = name;
 	}
 
-	public Target getTarget() {
+	public Target getDestination() {
 		return target;
 	}
 

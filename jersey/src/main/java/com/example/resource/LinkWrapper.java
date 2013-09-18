@@ -1,6 +1,7 @@
-package com.example.domain;
+package com.example.resource;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
 
 @XmlRootElement
 public class LinkWrapper {

@@ -1,4 +1,6 @@
-package com.example;
+package com.example.resource;
+
+import static org.junit.Assert.assertEquals;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -6,14 +8,11 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.grizzly.http.server.HttpServer;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.example.domain.Target;
-
-import static org.junit.Assert.assertEquals;
+import com.example.Main;
 
 public class TargetResourceTest {
 

@@ -1,6 +1,4 @@
-package com.example;
-
-import static java.util.Arrays.asList;
+package com.example.bodywriters;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -15,12 +13,9 @@ import javax.ws.rs.ext.Provider;
 
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
 
-import com.example.domain.CallForwards;
-import com.example.domain.Link;
-import com.example.domain.MetaWrapper;
-import com.example.domain.Target;
+import com.example.resource.MetaWrapper;
+
 
 @Provider
 public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
@@ -42,30 +37,20 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 		}
 		return false;
 	}
+	
 
 	@Override
 	public void writeTo(Object object, Class<?> clazz, Type type,
 			Annotation[] annotation, MediaType mediaType,
 			MultivaluedMap<String, Object> map, OutputStream out)
 			throws IOException, WebApplicationException {
-
-		if (object instanceof Target) {
-			Target obj = (Target) object;
-			MetaWrapper metaWrapper = new MetaWrapper(object, new Link("self",
-					"http://localhost:8080/api/target/" + obj.getId()), asList(new Link("callforwards",
-							"http://localhost:8080/api/target/" + obj.getId() +"/callforwards")));
-			ObjectMapper mapper = new ObjectMapper();
-			new JacksonJsonProvider(mapper).writeTo(metaWrapper, clazz, type, annotation, mediaType, map, out);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JacksonJsonProvider jsonProvider = new JacksonJsonProvider(mapper);
+		
+		if (object instanceof MetaWrapper) {
+			jsonProvider.writeTo(object, clazz, type, annotation, mediaType, map, out);
 		}
 		
-		if (object instanceof CallForwards) {
-			CallForwards obj = (CallForwards) object;
-			long targetId = obj.getTarget().getId();
-			MetaWrapper metaWrapper = new MetaWrapper(object, new Link("self",
-					"http://localhost:8080/api/target/"+ targetId +"/callforwards"), asList(new Link("source",
-							"http://localhost:8080/api/target/" + targetId)));
-			ObjectMapper mapper = new ObjectMapper();
-			new JacksonJsonProvider(mapper).writeTo(metaWrapper, clazz, type, annotation, mediaType, map, out);
-		}
 	}
 }
