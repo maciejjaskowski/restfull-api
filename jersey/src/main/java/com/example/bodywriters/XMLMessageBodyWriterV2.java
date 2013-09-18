@@ -27,7 +27,7 @@ public class XMLMessageBodyWriterV2 implements MessageBodyWriter<Object> {
 	@Override
 	public boolean isWriteable(Class<?> clazz, Type type,
 			Annotation[] annotations, MediaType mediaType) {
-		if ("com.example.domain".equals(clazz.getPackage().getName())
+		if (MetaWrapper.class.equals(clazz)
 				&& mediaType.getType().equals("application")
 				&& mediaType.getSubtype().matches(
 						"vnd\\.myown\\.target\\.v2\\+xml")) {

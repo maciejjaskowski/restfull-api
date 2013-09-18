@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
@@ -36,25 +35,25 @@ public class TargetResourceTest {
 
 	@Test
 	public void shouldRespondWithJson() {
-		String responseMsg = target.path("target")
-				.request(MediaType.APPLICATION_JSON).get(String.class);
-		assertEquals(responseMsg, "{\n" + "  \"id\" : 1,\n"
-				+ "  \"type\" : \"name\",\n" + "  \"name\" : \"type\"\n" + "}");
+		String responseMsg = target.path("target/13")
+				.request("application/vnd.myown.target+json").get(String.class);
+		assertEquals(responseMsg, 
+				"{\"data\":{\"id\":13,\"type\":\"name\",\"name\":\"type\"},\"_links\":[{\"link\":{\"uri\":\"http://localhost:8080/api/target/13/callforwards\",\"rel\":\"callforwards\"}}],\"_self\":{\"link\":{\"uri\":\"http://localhost:8080/api/target/13\",\"rel\":\"self\"}}}");
 	}
 
 	@Test
 	public void shouldRespondWithXmlV1() {
-		String responseMsg = target.path("target")
+		String responseMsg = target.path("target/13")
 				.request("application/vnd.myown.target+xml").get(String.class);
 		assertEquals(
 				responseMsg,
-				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><metaWrapper><data xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"target\"><name>type</name><type>name</type></data><_links><rel>callforwards</rel><uri>api/target/callforwards</uri></_links><_self><rel>self</rel><uri>api/target</uri></_self></metaWrapper>");
+				"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><metaWrapper><data xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"target\"><name>type</name><type>name</type></data><_links><link><rel>callforwards</rel><uri>http://localhost:8080/api/target/13/callforwards</uri></link></_links><_self><link><rel>self</rel><uri>http://localhost:8080/api/target/13</uri></link></_self></metaWrapper>");
 
 	}
 
 	@Test
 	public void shouldRespondWithXmlV2() {
-		String responseMsg = target.path("target")
+		String responseMsg = target.path("target/13")
 				.request("application/vnd.myown.target.v2+xml").get(String.class);
 		assertEquals(
 				responseMsg,

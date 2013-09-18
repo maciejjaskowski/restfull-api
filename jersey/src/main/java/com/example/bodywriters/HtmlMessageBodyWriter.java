@@ -16,6 +16,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.example.domain.CallForwards;
 import com.example.domain.Target;
+import com.example.resource.MetaWrapper;
 
 @Provider
 public class HtmlMessageBodyWriter implements MessageBodyWriter<Object> {
@@ -29,7 +30,7 @@ public class HtmlMessageBodyWriter implements MessageBodyWriter<Object> {
 	@Override
 	public boolean isWriteable(Class<?> clazz, Type type,
 			Annotation[] annotations, MediaType mediaType) {
-		if ("com.example.domain".equals(clazz.getPackage().getName())
+		if (MetaWrapper.class.equals(clazz)
 				&& mediaType.getType().equals("text")
 				&& mediaType.getSubtype().matches("html")) {
 			return true;

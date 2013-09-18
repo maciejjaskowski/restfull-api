@@ -10,18 +10,10 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import com.example.bodywriters.XMLMessageBodyWriterV2;
 
-/**
- * Main class.
- *
- */
 public class Main {
     // Base URI the Grizzly HTTP server will listen on
     public static final String BASE_URI = "http://localhost:%s/api/";
 
-    /**
-     * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
-     * @return Grizzly HTTP server.
-     */
     public static HttpServer startServer(String port) {
         // create a resource config that scans for JAX-RS resources and providers
         // in com.example package
@@ -37,11 +29,6 @@ public class Main {
 		return server;
     }
 
-    /**
-     * Main method.
-     * @param args
-     * @throws IOException
-     */
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer("8080");
         System.out.println(String.format("Jersey app started with WADL available at "
