@@ -19,11 +19,8 @@
 	 $(function() {
 		$.ajax({
 			"type": "get",
-			"headers": {
-				"Accept": "application/json"				
-			},
-// 			"dataType": "json",
-// 			"accepts": {json: "application/json"},
+			"dataType": "json",
+			"accepts": {json: "application/vnd.myown.target+json"},
 		    "url": location.href, 
 			"success": function(data, status) {
 		      console.log(JSON.stringify(data, undefined, 2))

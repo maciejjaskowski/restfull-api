@@ -50,17 +50,20 @@ public class JSONMessageBodyWriter implements MessageBodyWriter<Object> {
 			throws IOException, WebApplicationException {
 
 		if (object instanceof Target) {
+			Target obj = (Target) object;
 			MetaWrapper metaWrapper = new MetaWrapper(object, new Link("self",
-					"http://localhost:8080/api/target"), asList(new Link("callforwards",
-							"http://localhost:8080/api/target/callforwards")));
+					"http://localhost:8080/api/target/" + obj.getId()), asList(new Link("callforwards",
+							"http://localhost:8080/api/target/" + obj.getId() +"/callforwards")));
 			ObjectMapper mapper = new ObjectMapper();
 			new JacksonJsonProvider(mapper).writeTo(metaWrapper, clazz, type, annotation, mediaType, map, out);
 		}
 		
 		if (object instanceof CallForwards) {
+			CallForwards obj = (CallForwards) object;
+			long targetId = obj.getTarget().getId();
 			MetaWrapper metaWrapper = new MetaWrapper(object, new Link("self",
-					"http://localhost:8080/api/target/callforwards"), asList(new Link("source",
-							"http://localhost:8080/api/target")));
+					"http://localhost:8080/api/target/"+ targetId +"/callforwards"), asList(new Link("source",
+							"http://localhost:8080/api/target/" + targetId)));
 			ObjectMapper mapper = new ObjectMapper();
 			new JacksonJsonProvider(mapper).writeTo(metaWrapper, clazz, type, annotation, mediaType, map, out);
 		}
